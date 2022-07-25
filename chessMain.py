@@ -25,10 +25,27 @@ def main():
     print(gs.board)
     loadImages()
     running = True
+    sqSelected = () # keeps track of last clicked square
+    playerClicks = []
     while running:
         for e in p.event.get():
             if e.type == p.QUIT:
                 running = False
+            elif e.type == p.MOUSEBUTTONDOWN:
+                location = p.mouse.get_pos()
+                col = location[0] // SQ_SIZE
+                row = location[1] // SQ_SIZE
+                sqSelected = (row, col)
+                playerClicks.append(sqSelected)
+                if len(playerClicks) == 2:
+                    move = chessEngine.Move(playerClicks[0], playerClicks[1], gs.board)
+                    print(move.getChessNotation())
+                    print()
+                    gs.makeMove(move)
+                    playerClicks = []
+
+
+
         drawGameState(screen,gs)
         clock.tick(MAX_FPS)
         p.display.flip()

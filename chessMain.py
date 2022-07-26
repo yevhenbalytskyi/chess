@@ -39,9 +39,9 @@ def main():
                 playerClicks.append(sqSelected)
                 if len(playerClicks) == 2:
                     move = chessEngine.Move(playerClicks[0], playerClicks[1], gs.board)
-                    print(move.getChessNotation())
-                    print()
-                    gs.makeMove(move)
+                    if move.ifLegal():
+                        print(move.getChessNotation())
+                        gs.makeMove(move)
                     playerClicks = []
 
 
@@ -71,3 +71,8 @@ def drawPieces(screen, board):
 
 if __name__ == "__main__":
     main()
+
+"""legal = move.legalMoves()
+for r in range(len(legal)):
+    p.draw.rect(screen, "green", p.Rect(legal[r][0] * SQ_SIZE, legal[r][1] * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+print(move.legalMoves())"""

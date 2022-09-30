@@ -44,12 +44,31 @@ class Move():
             return False
         if self.pieceMoved[0] == self.pieceCaptured[0]:
             return False
-        #Pawn move logic
-        if self.pieceMoved[1] == "p":
+
+        #Jumping over pieces
+
+        #White pawn move logic
+        if self.pieceMoved == "wp" and self.pieceCaptured[0] == "b" and self.startCol == self.endCol:
+            return False
+        if self.pieceMoved == "wp" and self.pieceCaptured[0] == "b" and abs(self.startCol - self.endCol) == 1 \
+                and self.startRow - self.endRow == 1:
             return True
+        if self.pieceMoved == "wp" and self.startCol == self.endCol and self.startRow - self.endRow == 1:
+            return True
+
+        # Black pawn move logic
+        if self.pieceMoved == "bp" and self.pieceCaptured[0] == "w" and self.startCol == self.endCol:
+            return False
+        if self.pieceMoved == "bp" and self.pieceCaptured[0] == "w" and abs(self.startCol - self.endCol) == 1 \
+                and self.startRow - self.endRow == -1:
+            return True
+        if self.pieceMoved == "bp" and self.startCol == self.endCol and self.startRow - self.endRow == -1:
+            return True
+
         # Rook move logic
         if self.pieceMoved[1] == "R" and (self.startRow == self.endRow or self.startCol == self.endCol):
             return True
+
         # Bishop move logic
         if self.pieceMoved[1] == "B":
             diagonal1 = self.startRow - self.startCol  # left to right diagonal
@@ -58,11 +77,13 @@ class Move():
                 return True
             if self.endRow + self.endCol == diagonal2:
                 return True
+
         # Knight move logic
         if self.pieceMoved[1] == "N":
             if abs(self.startRow - self.endRow) + abs(self.startCol - self.endCol) == 3\
                     and not (self.startRow == self.endRow or self.startCol == self.endCol):
                 return True
+
         # King move logic
         if self.pieceMoved[1] == "K":
             if abs(self.startRow - self.endRow) + abs(self.startCol - self.endCol) == 1:
@@ -70,6 +91,7 @@ class Move():
             if abs(self.startRow - self.endRow) + abs(self.startCol - self.endCol) == 2\
                     and not (self.startRow == self.endRow or self.startCol == self.endCol):
                 return True
+
         # Queen move logic
         if self.pieceMoved[1] == "Q":
             if self.startRow == self.endRow or self.startCol == self.endCol:

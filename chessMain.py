@@ -4,7 +4,7 @@
 import pygame as p
 from chess import chessEngine
 
-WIDTH = HEIGHT = 512
+WIDTH = HEIGHT = 650
 DIMENSION = 8
 SQ_SIZE = HEIGHT // DIMENSION
 MAX_FPS = 30

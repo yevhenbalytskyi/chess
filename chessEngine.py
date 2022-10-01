@@ -2,21 +2,19 @@
 
 import pygame as p
 
-
 class GameState():
-    def __init__(self):
-        self.board = [
-            ["bR", "bN", "bB", "bQ", "bK", "bB", "bN", "bR"],
-            ["bp", "bp", "bp", "bp", "bp", "bp", "bp", "bp"],
-            ["--", "--", "--", "--", "--", "--", "--", "--"],
-            ["--", "--", "--", "--", "--", "--", "--", "--"],
-            ["--", "--", "--", "--", "--", "--", "--", "--"],
-            ["--", "--", "--", "--", "--", "--", "--", "--"],
-            ["wp", "wp", "wp", "wp", "wp", "wp", "wp", "wp"],
-            ["wR", "wN", "wB", "wQ", "wK", "wB", "wN", "wR"],
-        ]
-        self.whiteToMove = True
-        self.moveLog = []
+    board = [
+        ["bR", "bN", "bB", "bQ", "bK", "bB", "bN", "bR"],
+        ["bp", "bp", "bp", "bp", "bp", "bp", "bp", "bp"],
+        ["--", "--", "--", "--", "--", "--", "--", "--"],
+        ["--", "--", "--", "--", "--", "--", "--", "--"],
+        ["--", "--", "--", "--", "--", "--", "--", "--"],
+        ["--", "--", "--", "--", "--", "--", "--", "--"],
+        ["wp", "wp", "wp", "wp", "wp", "wp", "wp", "wp"],
+        ["wR", "wN", "wB", "wQ", "wK", "wB", "wN", "wR"],
+    ]
+    whiteToMove = True
+    moveLog = []
 
     def makeMove(self, move):
         self.board[move.startRow][move.startCol] = "--"
@@ -45,7 +43,8 @@ class Move():
         if self.pieceMoved[0] == self.pieceCaptured[0]:
             return False
 
-        #Jumping over pieces
+        if pathBlocked(self):
+            return False
 
         #White pawn move logic
         if self.pieceMoved == "wp" and self.pieceCaptured[0] == "b" and self.startCol == self.endCol:
@@ -120,3 +119,16 @@ class Move():
 
     def getRankFile(self,r,c):
         return self.colsToFiles[c] + self.rowsToRanks[r]
+
+
+def pathBlocked(self):
+    if self.endCol == self.startCol:
+        col = self.startCol
+        start = self.startRow
+        end = self.endRow - 1
+        while end > start :
+            if GameState.board[end][col] != "--":
+                return True
+            else:
+                end = end - 1
+    return False
